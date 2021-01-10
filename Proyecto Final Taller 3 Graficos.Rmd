@@ -1,0 +1,135 @@
+---
+title: "Proyecto Final graficando los casos de Covid19 en R"
+author: "Clemente Elizalde Marcos Alejandro, Alejo Hernandez Meztli"
+date: "9/1/2021"
+output: html_document
+---
+
+Por medio de este trabajo queremos dar a conocer información relevante sobre los casos de Covid19 en la Ciudad de México, en este caso sobre los casos estimados, defunciones y recuperados, también como parte de este trabajo deseamos aportar las herramientas necesarias para que alumnos y otros usuarios puedan incorporar los datos para crear sus propias graficas en el programa R. 
+
+
+Primero empezamos agregando nuestras librerías 
+```{r}
+library(ggplot2)
+library(plotly)
+library(ggmap)
+```
+
+
+Creamos una matriz 13x4 con los datos respectivos de las semanas
+```{r}
+Semanas<-c(10,11,12,13,14,15,20,25,30,35,40,45,50)
+CasosEstimados<-c(150,743,1628,3171,5590,8051,25608,46411,52990,40074,35703,48994,66525)
+Defunciones<-c(1,1,4,38,156,382,2818,4439,4975,3327,2263,2922,3460)
+Recuperados<-c(3,10,54,366,650,976,7792,23261,36150,30240,25153,35924,46028)
+TablaCov<-cbind(Semanas,CasosEstimados,Defunciones,Recuperados)
+TablaCov
+
+```
+
+
+
+
+Cambiamos el nombre de las columnas con el comando colnames y cambiamos el nombre de las filas con el comando rownames
+```{r}
+colnames(TablaCov)<-c("Semana","CasoConfirmados","Defunciones","Recuperados")
+rownames(TablaCov)<-c("Semana10","Semana11","Semana12","Semana13","Semana14","Semana15","Semana20","Semana25","Semana30","Semana35","Semana40","Semana45","Semana50")
+TablaCov
+
+```
+
+
+Creamos un data.frame con los datos de la matriz
+
+```{r}
+TablaCov<-data.frame(TablaCov)
+TablaCov
+
+```
+
+
+
+
+Graficamos el data.frame
+```{r}
+plot(TablaCov)
+```
+
+
+
+
+
+Graficamos los casos estimados con el comando plot(x,y)
+```{r}
+plot(Semanas,CasosEstimados)
+```
+
+
+
+Estilizamos la grafica con el comando type para añadir el circulo y col para añadir el color
+```{r}
+plot(Semanas,CasosEstimados,type="o",col="darkblue")
+```
+
+
+
+
+
+De igual forma graficamos las defunciones solo cambiando la variable
+```{r}
+plot(Semanas,Defunciones,type="o",col="red")
+```
+
+
+
+Aqui se cambia la variable a recuperados 
+```{r}
+plot(Semanas,Recuperados,type="o",col="darkgreen")
+```
+
+
+
+
+
+
+
+Si se busca una estética más interactiva y profesional usa el comando ggplot( data = nombre del data.frame, aes(x=Semanas,y=CasosEstimados))+geom_point para añadir un punto(size=numero del tamaño,colour="#codigo del color")+ geom_line para añadir una línea entre los puntos(size=numero del tamaño,colour="#codigo del color")+ geom_bar para crear una barra (stat="identity" sirve para mostrar las barras ,width = numero del ancho de la barra  ,colour="#codigo del color")
+
+
+```{r}
+ggplot(data = TablaCov, aes(x=Semanas,y=CasosEstimados))+geom_point(size=3,colour="#03C1D1")+geom_line(size=1,colour="#70ACC2")+geom_bar(stat="identity",width = .1,colour="#A6F2FF")
+```
+
+Puedes usar el mismo codigo que el anterior cambiando la variable "y" para graficar las demas
+
+```{r}
+ggplot(data = TablaCov, aes(x=Semanas,y=Defunciones))+geom_point(size=3,colour="#FA7ACB")+geom_line(size=.7,colour="#D52666")+geom_bar(stat="identity",width = .1,colour="pink")
+```
+
+Ademas puedes cambiar el grosor y color editando el codigo
+```{r}
+ggplot(data = TablaCov, aes(x=Semanas,y=Recuperados))+geom_point(size=3,colour="#AAD209")+geom_line(size=1,colour="#008080")+geom_bar(stat="identity",width = .1,colour="#72C2A0")
+```
+
+
+
+
+
+
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9CI3C_lT-lU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
